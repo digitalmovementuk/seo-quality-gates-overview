@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>SEO Page Quality Gates — Full Overview · Digital Movement</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="Every quality gate a page passes before, during and after production — with plain-language notes on why each matters, how it lifts Google rankings, and how an SEO specialist runs it with Claude.">
+<style>
+  :root{
+    /* Digital Movement brand */
+    --ink:#1b1230; --ink2:#463a5e; --muted:#7a7090;
+    --dm-purple:#321f4f;
+    --amber:#ffb23d; --orange:#f05f22; --pink:#ec178d; --violet:#d332ff; --purple:#9a2fc6;
+    --accent:#9a2fc6; --accent2:#ec178d;
+    --grad:linear-gradient(120deg,#ffb23d 0%,#f05f22 28%,#ec178d 58%,#d332ff 82%,#9a2fc6 100%);
+    --bg:#f7f5fb; --card:#ffffff; --line:#ece6f3;
+    --green:#0f9d58; --amber-ui:#c77700; --red:#d23b3b;
+    --mono:'SF Mono',ui-monospace,Menlo,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .progress{position:fixed;top:0;left:0;height:3px;background:var(--grad);width:0%;z-index:99;transition:width .1s}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 28px 90px}
+
+  /* ---------- header ---------- */
+  header{padding:54px 0 34px;border-bottom:1px solid var(--line);margin-bottom:40px}
+  .brand{display:flex;align-items:center;gap:14px;margin-bottom:28px}
+  .brand img{height:30px;width:auto;display:block}
+  .brand .div{width:1px;height:24px;background:var(--line)}
+  .brand .tag{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  h1{font-size:clamp(28px,4.6vw,46px);font-weight:800;letter-spacing:-.022em;line-height:1.1;color:var(--dm-purple)}
+  h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .sub{margin-top:16px;font-size:16px;color:var(--ink2);max-width:660px}
+  .sub code{font-family:var(--mono);font-size:13px;background:#f2ecf8;padding:1px 6px;border-radius:5px;color:var(--purple)}
+  .forwho{margin-top:18px;font-size:14.5px;color:var(--muted);max-width:660px}
+  .forwho b{color:var(--ink2)}
+  .law{margin-top:22px;display:inline-block;background:var(--dm-purple);color:#fff;border-radius:9px;padding:10px 18px;font-size:13.5px;font-weight:600}
+  .law b{color:var(--amber)}
+  .legend{margin-top:22px;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;font-size:12.5px;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .toolbar{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
+  .toolbar button{font:inherit;font-size:13px;font-weight:650;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink2);padding:8px 15px;border-radius:99px;transition:.15s}
+  .toolbar button:hover{border-color:var(--violet);color:var(--purple);box-shadow:0 3px 12px rgba(154,47,198,.10)}
+
+  /* ---------- sections ---------- */
+  section{margin-bottom:46px;opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+  section.in{opacity:1;transform:none}
+  .stage{display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+  .stage .n{font-family:var(--mono);font-size:11.5px;font-weight:700;color:#fff;background:var(--grad);border-radius:7px;padding:4px 11px;letter-spacing:.06em;white-space:nowrap}
+  h2{font-size:22px;font-weight:780;letter-spacing:-.01em;color:var(--dm-purple)}
+  .note{font-size:14px;color:var(--muted);margin:7px 0 18px}
+  h3{font-size:14px;font-weight:750;margin:30px 0 12px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  h3 .htag{font-size:11px;font-weight:700;letter-spacing:.07em;border-radius:6px;padding:4px 10px}
+  h3 .htag.c{background:#f1ecf8;color:var(--purple)}
+  h3 .htag.k{background:#fdeaf4;color:var(--pink)}
+  h3 .hmuted{font-weight:600;color:var(--muted)}
+
+  /* ---------- accordion gate ---------- */
+  .gate{border:1px solid var(--line);border-radius:12px;background:var(--card);margin-bottom:9px;overflow:hidden;box-shadow:0 1px 2px rgba(27,18,48,.04);transition:border-color .18s,box-shadow .18s}
+  .gate[open]{border-color:var(--violet);box-shadow:0 8px 26px rgba(154,47,198,.11)}
+  summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:13px;padding:14px 16px}
+  summary::-webkit-details-marker{display:none}
+  summary:hover{background:#faf6fe}
+  .gid{font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;background:var(--purple);border-radius:6px;padding:3px 9px;flex-shrink:0;min-width:34px;text-align:center}
+  .gid.r{background:var(--pink)}
+  .gid.s{background:var(--dm-purple)}
+  .gname{flex:1;min-width:0;font-weight:700;color:var(--ink);font-size:15px}
+  .gstatus{flex-shrink:0}
+  .pill{font-size:10.5px;font-weight:700;letter-spacing:.05em;border-radius:99px;padding:4px 11px;white-space:nowrap}
+  .pill.block{background:#fdecec;color:var(--red)}
+  .pill.drop{background:#fff4e2;color:var(--amber-ui)}
+  .pill.ok{background:#e8f6ee;color:var(--green)}
+  .pill.live{background:#eaf1fd;color:#2563eb}
+  .chip{font-size:11.5px;font-weight:650;color:var(--ink2);background:#f3eefa;border:1px solid #ece2f6;border-radius:7px;padding:4px 10px;white-space:nowrap;font-family:var(--mono)}
+  .chev{flex-shrink:0;width:18px;height:18px;color:var(--muted);transition:transform .25s ease}
+  .gate[open] .chev{transform:rotate(180deg);color:var(--purple)}
+
+  .gbody{padding:2px 16px 16px;display:grid;gap:10px}
+  .gwhat{font-size:14px;color:var(--ink2);background:#faf8fc;border:1px solid var(--line);border-radius:9px;padding:11px 13px}
+  .gwhat b{color:var(--dm-purple)}
+  .exp{border-left:3px solid;border-radius:0 9px 9px 0;padding:11px 14px}
+  .exp h4{font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;gap:7px}
+  .exp p{font-size:14px;color:var(--ink2);line-height:1.55}
+  .exp.why{border-color:var(--orange);background:#fff6ee}
+  .exp.why h4{color:#c4521a}
+  .exp.rank{border-color:var(--pink);background:#fdeff6}
+  .exp.rank h4{color:#bb1271}
+  .exp.claude{border-color:var(--purple);background:#f7f0fc}
+  .exp.claude h4{color:var(--purple)}
+  .exp.claude p b{color:var(--dm-purple)}
+
+  footer{border-top:1px solid var(--line);padding-top:24px;margin-top:10px;font-size:13px;color:var(--muted)}
+  footer .fb{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  footer .fb img{height:22px}
+  footer b{color:var(--ink2)}
+  footer code{font-family:var(--mono);font-size:12px;background:#f2ecf8;padding:1px 5px;border-radius:4px;color:var(--purple)}
+
+  @media(max-width:640px){
+    .wrap{padding:0 15px 60px}
+    h3{font-size:13px}
+    summary{gap:10px;padding:13px 13px;flex-wrap:wrap}
+    .gname{font-size:14.5px;flex-basis:60%}
+    .chev{margin-left:auto}
+    .gbody{padding:2px 13px 14px}
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="pb"></div>
+<div class="wrap">
+
+<header>
+  <div class="brand">
+    <img src="dm-logo.svg" alt="Digital Movement">
+    <div class="div"></div>
+    <div class="tag">SEO Production System</div>
+  </div>
+  <h1>SEO Page Quality Gates<br><span class="g">— the full stack, explained</span></h1>
+  <p class="sub">Every gate a page passes before, during and after production. The per-page chain runs automatically in one go via <code>full_audit.py</code>; "done" is decided by <code>gate_to_green.py</code> — GREEN only at zero blockers.</p>
+  <p class="forwho">Built for in-house and partner SEO teams. Every gate carries three plain-language notes: <b>why it matters</b>, <b>how it lifts your Google ranking</b>, and <b>how an SEO specialist implements it with Claude</b>.</p>
+  <div class="law">Governance: <b>gates &gt; prompts &gt; page-as-is</b> · nothing ships until every applicable gate is green</div>
+  <div class="legend">
+    <span><i style="background:var(--orange)"></i>Why it matters</span>
+    <span><i style="background:var(--pink)"></i>How it lifts ranking</span>
+    <span><i style="background:var(--purple)"></i>How to run it with Claude</span>
+  </div>
+  <div class="toolbar">
+    <button id="expandAll">Expand all</button>
+    <button id="collapseAll">Collapse all</button>
+  </div>
+</header>
+
+<!-- ============ STAGE 0 ============ -->
+<section>
+  <div class="stage"><span class="n">STAGE 0</span><h2>Before any page exists — keyword scope</h2></div>
+  <p class="note">Bad keywords never become pages. These run on the keyword list, not on HTML.</p>
+
+  <details class="gate">
+    <summary><span class="gid s">G0·1</span><span class="gname">Keyword scope gate</span><span class="gstatus"><span class="pill drop">DROPPED</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it checks ·</b> No competitor, brand or company-name keywords (legal forms like GmbH / AG, a brand denylist, &amp;-brands). Off-topic word collisions get flagged for a human to review, not auto-dropped.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>Someone searching a rival's company name will never become your customer — they already know who they want. Building pages for those terms burns time and money on traffic that never turns into an enquiry.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Google rewards pages that match what the searcher actually wants. A page targeting a competitor's brand can't satisfy that, so it won't rank — and the dead pages dilute the authority of the pages that should.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Hand <b>Claude</b> the raw keyword list and ask it to flag any term containing a legal form (GmbH, AG, Ltd), a known competitor or brand name, or an &amp;-brand — and to split "clearly navigational" from "ambiguous" so a human only reviews the grey-area terms.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid s">G0·2</span><span class="gname">SERP consultancy gate</span><span class="gstatus"><span class="pill drop">DROPPED</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it checks ·</b> Every kept keyword must show consultancies / agencies in Google's top 3 <b>and</b> top 10 (Google only, via Semrush SERP — never Bing or DuckDuckGo).</p>
+      <div class="exp why"><h4>Why it matters</h4><p>The current top results tell you who Google thinks the searcher wants. If it shows tools, Wikipedia or courses instead of firms like yours, a service page has almost no chance there — better to know that before you build it.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Matching the dominant result type ("search intent") is one of the strongest ranking signals. Targeting keywords where real firms already rank means you're entering a race you can actually win.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Give <b>Claude</b> a SERP export per keyword and have it label the top 10 by type (consultancy / tool / info article / directory). Keep only keywords where service firms appear in both the top 3 and the wider top 10.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid s">G0·3</span><span class="gname">Buying-intent filter</span><span class="gstatus"><span class="pill drop">DROPPED</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it checks ·</b> Only keywords with real buying intent for your service stay (service terms, "consultant", locations, pricing). How-tos, definitions and DIY queries are dropped.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>A "how to do X myself" searcher wants to avoid hiring you; a "X consultant near me" searcher wants to hire. Your pages should target the second group.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Pages aimed at buyers earn the clicks and enquiries that signal relevance and quality to Google, lifting rankings. Info pages bring traffic that bounces without ever converting.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to sort each keyword into "ready to buy", "comparing options" or "just researching / DIY", and drop the last bucket unless it's a deliberate top-of-funnel play.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid s">G0·4</span><span class="gname">EYS enquiry triage</span><span class="gstatus"><span class="pill drop">RESERVE</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it checks ·</b> Ranks the keywords that passed by expected enquiries per month, with a cap per service cluster → a finite build list (default 400) plus a reserve pool.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>You can't build everything at once. This puts the keywords most likely to generate real enquiries at the front of the queue.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Concentrating effort on the highest-yield pages (and not flooding one topic) builds topical authority faster and avoids the thin, competing pages that drag a whole site down.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> estimate monthly enquiry potential per keyword (volume × intent × win-likelihood), apply a per-cluster cap so one service doesn't eat the budget, and output a ranked build list with the rest held in reserve.</p></div>
+    </div>
+  </details>
+</section>
+
+<!-- ============ STAGE 1 ============ -->
+<section>
+  <div class="stage"><span class="n">STAGE 1</span><h2>Per-page audit chain — runs automatically, in order</h2></div>
+  <p class="note">A page is never "done" after one gate — the whole chain runs in one command and reports a single consolidated verdict.</p>
+
+  <details class="gate">
+    <summary><span class="gid s">1</span><span class="gname">Benchmark gate</span><span class="gstatus"><span class="pill block">BLOCKER</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it checks ·</b> Structure + detail vs the depth benchmark (body 1,500–1,800 words). Blocks any claim to hold certificates or own tools (U1a/U1b), scans for invented data (D1), and requires industry frameworks to be explained, never claimed as owned.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>Thin or padded pages, or pages that fib about credentials, read as untrustworthy and get ignored by buyers — and can drag the whole site into trouble.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Google's "helpful content" system rewards genuinely useful, appropriately deep pages and demotes thin or misleading ones. Hitting the right depth with honest claims keeps you on the right side of it.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to measure body word count, list every credential / tool / statistic claim and check each is true and supported, and confirm framework mentions explain the method rather than claim ownership — then fix or cut whatever fails.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid s">2</span><span class="gname">Substance blocks (4 + 1)</span><span class="gstatus"><span class="pill block">BLOCKER</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it checks ·</b> Hub pages carry exactly five human-written blocks — misdiagnosis · methodology · outcome · cost · market. No AI filler, no missing block, no empty placeholder.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>Real first-hand experience and specifics are what make a page believable. These five blocks force genuine human insight onto every hub.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Google's E-E-A-T framework (Experience, Expertise, Authoritativeness, Trust) favours pages with real first-hand substance — exactly the AI-only filler it tries to demote.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Use <b>Claude</b> to draft the questions that pull these five stories out of the client, mark each block "human insert", and refuse to publish until all five are filled with real content.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid s">2b</span><span class="gname">Google Essentials (G1–G11)</span><span class="gstatus"><span class="pill block">BLOCKER</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it checks ·</b> Google's own published guidance: honest title/H1 · who-created-it shown · honest dates · original value · no placeholders/sloppiness · no padding · descriptive title · sources cited · no keyword stuffing · not thin · no hidden text.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>These are the basics Google says it judges every page on. Failing them is an own goal.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Meeting Search Essentials keeps a page eligible to rank at all; tripping a spam policy can suppress or de-index it.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Give <b>Claude</b> the page plus Google's Search Essentials checklist and have it return a pass/fail per rule with the exact fix — e.g. rewrite a clickbait title to match the content, add an author, remove stuffed phrases.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid s">3</span><span class="gname">36-check gate-runner</span><span class="gstatus"><span class="pill block">BLOCKER</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it checks ·</b> 20 compliance + 16 ranking checks (full list in the next section). Refuses to write <code>sitemap.xml</code> until every page is green.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>It's the one automated pass that catches the dozens of small technical and content issues a human eye slides past.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Each check maps to a known ranking or indexing factor; clearing all 36 means no obvious technical reason is holding the page back.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Point <b>Claude</b> at the page and the 36-check list, have it run each check, report fails with fixes, and re-check after edits until all 36 are green.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid s">3b</span><span class="gname">AI-Search / GEO gate</span><span class="gstatus"><span class="pill block">BLOCKER</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it checks ·</b> Citation-readiness for ChatGPT, Gemini, Claude, Perplexity and Google AI Overviews. Threshold ≥ 85/100. No snake oil — it rewards structure, extractability and entity consistency.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>A growing share of searches now end inside an AI answer. If the AI can't easily lift a clean fact from your page, you're invisible to those users.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>The same structure that earns AI citations (a clear answer up top, tidy headings, specific facts) also helps classic rankings — it's the opposite of a gimmick.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> whether it could answer the target question using only this page, and where it would struggle — then tighten the opening answer, headings and facts until extraction is effortless.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid s">4</span><span class="gname">Content relevance (R16)</span><span class="gstatus"><span class="pill block">BLOCKER</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it checks ·</b> The copy is built from, and covers, the page's research corpus — real Reddit threads + People-Also-Ask: actual questions, pain points, terminology. No corpus → no copy → no ship.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>Writing from real user language guarantees the page answers the questions people actually ask, in their own words.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Covering the real questions and terms around a topic builds the topical completeness Google rewards, and earns featured snippets and AI citations.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> mine Reddit + PAA for the topic, extract the recurring questions and phrasing, and check the draft answers each one. Add a section for any gap before publishing.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid s">5</span><span class="gname">seo-page-benchmark (LLM scorecard)</span><span class="gstatus"><span class="pill block">100/100</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it checks ·</b> An LLM scorecard across nine weighted areas — Indexability · Content Quality · Schema · E-E-A-T · Internal Linking · Accessibility · Performance · AI Readiness · Conversion. Hard pass bar: <b>100/100</b>.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>It's the final all-round health check; 100/100 means nothing important was left half-done.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Every dimension it scores is a real ranking or conversion lever, so a perfect score is a page firing on all of them.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Run the page through <b>Claude</b> as a scorer, get the 0–100 per dimension with the gap list, fix the lowest scores first, and re-score until it reads 100/100.</p></div>
+    </div>
+  </details>
+
+  <h3><span class="htag c">STANDALONE · 5 GATES</span><span class="hmuted">run alongside the chain</span></h3>
+
+  <details class="gate">
+    <summary><span class="gid s">S1</span><span class="gname">Top-bar match</span><span class="gstatus"><span class="pill block">BLOCKER</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it checks ·</b> The page nav matches the site homepage exactly (style, buttons, logo — desktop + mobile); only the in-page jump-links adapt to the page.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>A consistent header makes the page feel like a real part of the site, not a bolted-on landing page — which builds trust and keeps people browsing.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>A coherent site structure and navigation help Google understand the site and keep users engaged (lower bounce) — both positive signals.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> copy the homepage nav's HTML/CSS/JS into the page, swap only the section anchor links, then diff the two headers to confirm they match.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid s">S2</span><span class="gname">UX gate (mobile + readability)</span><span class="gstatus"><span class="pill block">BLOCKER</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it checks ·</b> UX-1 mobile: centred layout, section spacing, viewport meta, 16px form inputs (so iPhones don't zoom). UX-2 readability: sensible line length, body text size, heading order.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>Most visitors are on a phone. If it's awkward to read or tap, they leave before they enquire.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Mobile usability and page experience are direct Google ranking factors — and a clean, readable page also converts far better.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to audit the page at phone width for tap-target size, font sizes, spacing and heading order, and apply the CSS fixes for anything that fails.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid s">S3</span><span class="gname">De-invent gate</span><span class="gstatus"><span class="pill block">BLOCKER</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it checks ·</b> Strips or flags any fabricated numbers, stats, years, client counts or prices — the never-invent-data rule applied to copy, schema, meta and alt text.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>One made-up statistic destroys trust and can be legally risky. A real business must only state facts it can stand behind.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Google's trust signals penalise inaccurate content; invented "facts" also can't be backed by sources, which weakens E-E-A-T.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> list every concrete number / claim and label each "client-supplied &amp; verified" or "unverified" — then remove or soften the unverified ones to qualitative wording.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid s">S4</span><span class="gname">Section distinctness</span><span class="gstatus"><span class="pill block">BLOCKER</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it checks ·</b> Every section owns a distinct angle — no two sections repeating the same concepts. Compares sections mathematically (TF-IDF cosine) and blocks duplicates, weak-focus sections and clashing "signatures".</p>
+      <div class="exp why"><h4>Why it matters</h4><p>Pages that say the same thing five different ways feel padded and waste the reader's time.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Distinct, non-repetitive sections cover more of the topic and avoid the "thin / padded" signals the helpful-content system demotes.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to summarise each section in one line, flag any pair that overlaps too much, and rewrite the weaker one to cover a genuinely different angle.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid s">S5</span><span class="gname">Visual QA (agent)</span><span class="gstatus"><span class="pill block">BLOCKER</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it checks ·</b> Screenshots + self-critiques the page at desktop AND mobile. The hero must fit the first screen (1440×900) and the hero eyebrow + lead must talk about the same topic as the H1.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>First impressions are visual. A broken or off-topic hero loses people in the first two seconds.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>A focused, on-topic hero and clean layout keep visitors on the page (engagement signals) and reinforce relevance for the target term.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> take desktop and mobile screenshots, check the hero fits and stays on-topic with the H1, and list every visual issue to fix before sign-off.</p></div>
+    </div>
+  </details>
+</section>
+
+<!-- ============ THE 36 CHECKS ============ -->
+<section>
+  <div class="stage"><span class="n">DETAIL</span><h2>The 36 checks inside the gate-runner</h2></div>
+
+  <h3><span class="htag c">COMPLIANCE · 20 CHECKS</span><span class="hmuted">keeps the page IN the index</span></h3>
+
+  <details class="gate">
+    <summary><span class="gid">A</span><span class="gname">Uniqueness vs hub + nearest sibling</span><span class="gstatus"><span class="chip">≥ 50% unique</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>Near-duplicate pages compete with each other and look like filler.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Google indexes one version of near-duplicate content and ignores the rest; being ≥ 50% unique keeps each page worth indexing.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to compare the page against its hub and closest sibling and rewrite shared passages until at least half the wording is unique.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid">B</span><span class="gname">Not a doorway page</span><span class="gstatus"><span class="chip">≥ 3 sections</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>Thin pages that exist only to catch a keyword annoy both users and Google.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>"Doorway pages" are explicitly against Google's spam policies; three real sections (≥ 150 words each) prove the page has substance.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> check each section's length and depth and expand any thin keyword shell into genuine content.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid">C</span><span class="gname">Title set + globally unique</span><span class="gstatus"><span class="chip">unique site-wide</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>The title is the headline in search results and must be unique so your own pages don't compete.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Unique, descriptive titles are a core ranking and click-through factor.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to scan every page's title, flag duplicates, and write a unique title per page.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid">D</span><span class="gname">Meta description</span><span class="gstatus"><span class="chip">unique · 140–160</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>It's the sales line under the title; a good one earns the click.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>It doesn't rank directly, but a strong description lifts click-through — which indirectly helps.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> write a unique 140–160-character description per page that matches the content and invites the click.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid">E</span><span class="gname">H1</span><span class="gstatus"><span class="chip">exactly one · unique</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>The on-page headline tells both reader and Google what the page is about.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>A clear, unique H1 reinforces the page's main topic.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to confirm one H1 per page and that it's unique and on-topic.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid">F</span><span class="gname">Geo-page local relevance</span><span class="gstatus"><span class="chip">≥ 2 of 4 signals</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>A "service in [city]" page must actually feel local, not a find-and-replace.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Genuine local signals help local and map rankings; templated geo pages get filtered out.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> add real local detail (area names, local context) so each geo page clears at least two local signals.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid">G</span><span class="gname">Sector-page relevance</span><span class="gstatus"><span class="chip">≥ 2 of 4 signals</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>A page for an industry must speak that industry's language and problems.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Sector-specific relevance lifts rankings for niche queries and avoids thin templating.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to weave sector-specific terms, problems and examples into each sector page.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid">H</span><span class="gname">E-E-A-T</span><span class="gstatus"><span class="chip">≥ 2 of 3 markers</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>People and Google trust pages that show who's behind them and why they're qualified.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>E-E-A-T signals (author byline / trust / expertise) support rankings, especially on money or your-life topics.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> add an author byline, credentials or trust markers wherever they're missing.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid">I</span><span class="gname">Internal linking</span><span class="gstatus"><span class="chip">≥ 3 in · ≥ 4 out</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>Links help readers find related pages and show how the site fits together.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Internal links pass authority and help Google crawl and rank deeper pages.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to suggest relevant internal links in and out of the page until it meets the minimums.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid">J</span><span class="gname">Indexability</span><span class="gstatus"><span class="chip">crawlable</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>If Google can't index it, nothing else matters.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Correct indexability (canonical + in sitemap + not noindexed + not robots-blocked) is the precondition for ranking at all.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> check the canonical, sitemap entry, robots and meta tags and fix anything blocking indexing.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid">K</span><span class="gname">Schema accuracy</span><span class="gstatus"><span class="chip">matches content</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>Structured data helps search engines understand the page — and it must match what's visible.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Accurate schema can earn rich results; mismatched schema risks a manual penalty.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to validate the schema against the visible content and correct any mismatch.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid">L</span><span class="gname">Alt text</span><span class="gstatus"><span class="chip">every image</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>Alt text describes images for screen readers and search engines.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Good alt text aids accessibility and image search — small but real signals.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> write descriptive alt text for every image and remove any placeholder text.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid">M</span><span class="gname">Core Web Vitals</span><span class="gstatus"><span class="chip">LCP·INP·CLS</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>Slow or jumpy pages frustrate users.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Core Web Vitals (LCP &lt; 2.5s · INP &lt; 200ms · CLS &lt; 0.1) are a confirmed Google ranking factor.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to flag heavy images, blocking scripts and layout shifts, and apply the fixes.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid">N</span><span class="gname">HTTPS + canonical hygiene</span><span class="gstatus"><span class="chip">absolute https</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>Secure, canonical URLs avoid duplicate-content confusion.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>HTTPS is a ranking signal; clean canonicals prevent diluted or duplicated indexing.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> confirm the canonical is an absolute https URL and consistent site-wide.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid">O</span><span class="gname">No keyword stuffing</span><span class="gstatus"><span class="chip">sane density</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>Cramming keywords reads badly and looks manipulative.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Keyword stuffing is a spam signal that can demote the page.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to compare keyword density to a natural baseline and rephrase over-stuffed passages.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid">P</span><span class="gname">Hero contact form</span><span class="gstatus"><span class="chip">hero + foot</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>Make it effortless to enquire the moment the visitor is convinced.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>More enquiries and engagement are positive signals — and conversion is the point of ranking.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> place a full enquiry form in the hero and one at the foot (two-column on desktop), and nowhere mid-page.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid">V</span><span class="gname">Mobile H1 overflow-safe</span><span class="gstatus"><span class="chip">no break</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>A headline that overflows looks broken on phones.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Clean mobile rendering supports mobile-usability signals.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to test the H1 at narrow widths and add word-break / sizing so long words wrap cleanly.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid">WC</span><span class="gname">Width coherence</span><span class="gstatus"><span class="chip">one max-width</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>Mismatched widths make a page feel amateur.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>A polished, coherent layout supports trust and engagement.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> set one shared content max-width and align every section (hero included) to it.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid">SC</span><span class="gname">Site chrome</span><span class="gstatus"><span class="chip">nav + footer</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>Header and footer make the page feel like a complete, real site.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Consistent chrome and navigation aid trust and crawlability.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to add the sticky logo nav and full footer if either is missing.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid">IM</span><span class="gname">Imagery</span><span class="gstatus"><span class="chip">≥ 3 real images</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>Relevant images make a page credible and engaging, not a wall of text.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Real, relevant images support engagement and image search.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> add at least three genuine, relevant images (not stock filler) with proper alt text.</p></div>
+    </div>
+  </details>
+
+  <h3><span class="htag k">RANKING · 16 CHECKS</span><span class="hmuted">gets the page to TOP 3</span></h3>
+
+  <details class="gate">
+    <summary><span class="gid r">R1</span><span class="gname">Topical depth</span><span class="gstatus"><span class="chip">≥ 1,500 words</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>Buyers' questions need room to be answered properly.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Sufficient depth correlates with top rankings on competitive terms.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to check word count and expand thin areas with genuinely useful content.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid r">R2</span><span class="gname">Intent-format match</span><span class="gstatus"><span class="chip">matches SERP</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>If Google shows comparisons and you wrote a brochure, you've mismatched the searcher.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Matching the dominant result format is a strong ranking lever.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> review the live SERP format and reshape the page to match it.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid r">R3</span><span class="gname">Entity coverage</span><span class="gstatus"><span class="chip">≥ 70%</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>Covering the key people, tools and concepts shows you know the topic fully.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Entity completeness builds the topical authority Google rewards.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to extract the entities from the top results and ensure the page covers at least 70%.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid r">R4</span><span class="gname">People-Also-Ask coverage</span><span class="gstatus"><span class="chip">≥ 4 questions</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>Answering the common follow-up questions makes the page genuinely useful.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>PAA coverage earns extra SERP real estate and depth signals.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> pull the PAA questions and add clear answers for at least four.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid r">R5</span><span class="gname">Featured-snippet structure</span><span class="gstatus"><span class="chip">40–60 words</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>A crisp 40–60-word answer is what Google lifts into position zero.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Snippet-shaped answers can win the featured snippet above all the blue links.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to rewrite the top two FAQ answers to a tight 40–60 words.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid r">R6</span><span class="gname">Internal-link weight</span><span class="gstatus"><span class="chip">≥ 1 from hub</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>A link from the hub tells Google this page matters.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Hub → page links pass authority and speed up ranking.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> add a contextual link from the hub (and other relevant pages) to this one.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid r">R7</span><span class="gname">Ranking-grade Core Web Vitals</span><span class="gstatus"><span class="chip">faster than baseline</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>Fast pages beat slow ones, all else equal.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Beating the stricter thresholds (LCP &lt; 1.5s · INP &lt; 100ms · CLS &lt; 0.05) gives a competitive edge for top spots.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to push performance past the stricter targets — preload the hero, defer scripts, reserve image space.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid r">R8</span><span class="gname">Schema enrichment</span><span class="gstatus"><span class="chip">Service + FAQ</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>Richer structured data helps search engines and can earn rich results.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Enriched schema (Service + FAQPage, plus LocalBusiness on geo pages) supports understanding and eligibility for enhanced listings.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> add Service and FAQPage schema (plus LocalBusiness on geo pages) that matches the content.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid r">R9</span><span class="gname">Multimodal content</span><span class="gstatus"><span class="chip">image + table/diagram</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>A table or diagram explains things words can't.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Mixed media improves engagement and can win image / visual placements.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to add a useful comparison table or simple diagram alongside the imagery.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid r">R10</span><span class="gname">Author E-E-A-T</span><span class="gstatus"><span class="chip">byline / schema</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>A named, credible author raises trust.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Author signals support E-E-A-T, especially on important topics.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> add an author byline and/or Person schema with real credentials.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid r">R11</span><span class="gname">Comparison content</span><span class="gstatus"><span class="chip">for comparative queries</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>When people compare options, give them the comparison.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Matching comparative intent wins those queries.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to add a fair comparison section for any comparative target keyword.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid r">R12</span><span class="gname">Original data</span><span class="gstatus"><span class="chip">client-supplied</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>Original data is the strongest proof of expertise — but it must be real.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Unique data earns links and citations and stands out to Google.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> help structure and present the client's real data — never fabricate a figure.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid r">R13</span><span class="gname">Geo ranking-grade relevance</span><span class="gstatus"><span class="chip">≥ 3 of 5 signals</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>To win local searches, a page must be convincingly local.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Stronger local relevance lifts local and map rankings.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to deepen genuine local detail until the page clears the higher geo bar.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid r">R14</span><span class="gname">Sector ranking-grade relevance</span><span class="gstatus"><span class="chip">≥ 4 of 6 signals</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>To win niche searches, the page must deeply fit the sector.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Deeper sector relevance lifts rankings on specialised terms.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> enrich sector-specific depth until it clears the higher bar.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid r">R15</span><span class="gname">Buying-intent CTA + social proof</span><span class="gstatus"><span class="chip">above the fold</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>Show the next step and proof early, while interest is highest.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Strong calls-to-action and proof lift conversions — the real goal of ranking.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to place a clear CTA and a trust / proof element above the fold.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid r">R16</span><span class="gname">Research-grounded copy</span><span class="gstatus"><span class="pill block">BLOCKER</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <div class="exp why"><h4>Why it matters</h4><p>Copy grounded in real user questions answers what people actually want.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Covering the real Reddit / PAA corpus builds topical completeness and earns snippets and citations.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> verify the draft answers every recurring question from the research corpus before publishing.</p></div>
+    </div>
+  </details>
+</section>
+
+<!-- ============ STAGE 2 ============ -->
+<section>
+  <div class="stage"><span class="n">STAGE 2</span><h2>Whole-set gates — before the sitemap ships</h2></div>
+  <p class="note">Per-page green is not enough; the set has to be healthy as a whole.</p>
+
+  <details class="gate">
+    <summary><span class="gid s">W1</span><span class="gname">Index-readiness gate</span><span class="gstatus"><span class="chip">Score ≥ 50</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it checks ·</b> The whole set for near-duplicates and unique substance, gives a "fewer-but-stronger-pages" verdict, and prints a Uniqueness Score per page.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>Publishing hundreds of similar pages backfires — most stay unindexed. This catches that before launch.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Google indexes and ranks distinct, substantial pages; near-duplicate sets get mostly ignored or filtered.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to score each page's uniqueness across the set and recommend which thin / duplicate pages to merge or cut.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid s">W2</span><span class="gname">Uniqueness threshold</span><span class="gstatus"><span class="chip">both conditions</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it checks ·</b> Each cluster's median uniqueness ≥ 50% AND ≥ 80% of pages individually pass — validated on a 5–8-page sample <b>before</b> building the full set.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>It proves the template can actually produce unique pages before you write hundreds of them.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>A set that clears this bar avoids the near-duplicate filtering that kills programmatic SEO.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> build a small sample first, measure uniqueness, and only greenlight the full build if both conditions hold.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid s">W3</span><span class="gname">Corpus gate (Gate 3 of 4)</span><span class="gstatus"><span class="chip">MAX 100/100</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it checks ·</b> All-pairs near-duplicates · keyword cannibalisation · orphans / click-depth / starved money-pages · keyword↔page map drift. Every finding is a blocker.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>It catches set-wide problems no single-page check can see, like two pages fighting for the same keyword.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Fixing cannibalisation and orphans concentrates authority on the right pages and helps Google crawl them.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to map every keyword to one page, flag any two pages targeting the same term, and find pages with too few internal links.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid s">W4</span><span class="gname">Indexation hygiene</span><span class="gstatus"><span class="chip">all clean</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it checks ·</b> www → non-www 301 · the <code>/sitemap/</code> page noindexed · default CMS junk pages removed.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>Stray duplicate URLs and default CMS pages confuse Google and waste crawl budget.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Clean URL and crawl hygiene helps Google spend its budget on the pages that matter.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> check redirects, noindex tags and leftover CMS pages and list the fixes.</p></div>
+    </div>
+  </details>
+</section>
+
+<!-- ============ STAGE 3 ============ -->
+<section>
+  <div class="stage"><span class="n">STAGE 3</span><h2>Live &amp; post-publish (Gate 4 of 4)</h2></div>
+  <p class="note">The work that turns indexed pages into ranked, enquiry-generating pages.</p>
+
+  <details class="gate">
+    <summary><span class="gid s">L1</span><span class="gname">seo-live-gate</span><span class="gstatus"><span class="pill live">LIVE</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it does ·</b> Post-deploy verification of the live URLs.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>A page can pass every test locally and still break once it's deployed.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Confirming the live page renders, indexes and matches the approved version protects the rankings you built for.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to fetch each live URL and confirm it matches the approved page (status, content, meta, schema).</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid s">L2</span><span class="gname">seo-indexation-rescue</span><span class="gstatus"><span class="pill live">LIVE</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it does ·</b> Pulls each URL's real index state from Search Console, diagnoses Crawled / Discovered-not-indexed pages, fixes them, pushes via IndexNow and re-requests indexing.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>Getting indexed is the single biggest hurdle for large builds — pages can't rank if Google hasn't indexed them.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Moving pages from "not indexed" to "indexed" is the prerequisite for any ranking at all.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> pull index status, group the not-indexed pages by cause, fix each cause, and resubmit for indexing.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid s">L3</span><span class="gname">seo-rank-war</span><span class="gstatus"><span class="pill live">LIVE</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it does ·</b> The post-publish loop that walks keywords from page two up to position one.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>Most pages first land on page two; this is the systematic push to the top.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Targeted improvements (content, links, snippets) move pages up the rankings over time.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to track each keyword's position, diagnose what's holding page-two pages back, and prescribe the next move per page.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid s">L4</span><span class="gname">seo-link-earning</span><span class="gstatus"><span class="pill live">LIVE</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it does ·</b> An off-page authority plan — the backlinks that on-page perfection can't manufacture.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>For competitive terms, external links are often the deciding factor.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>Quality backlinks are one of Google's strongest ranking signals.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> analyse the backlink gap vs competitors and build a prioritised, realistic link-earning plan.</p></div>
+    </div>
+  </details>
+
+  <details class="gate">
+    <summary><span class="gid s">L5</span><span class="gname">local-seo-map-pack</span><span class="gstatus"><span class="pill live">LIVE</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="gbody">
+      <p class="gwhat"><b>What it does ·</b> Google Business Profile optimisation, NAP (name / address / phone) consistency, and citations for local verticals.</p>
+      <div class="exp why"><h4>Why it matters</h4><p>The map pack sits above the normal results and is decided by different factors.</p></div>
+      <div class="exp rank"><h4>How it lifts your Google ranking</h4><p>GBP optimisation and consistent NAP / citations drive local-pack and map rankings.</p></div>
+      <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to audit NAP consistency across the site, GBP and citations, and fix every mismatch.</p></div>
+    </div>
+  </details>
+</section>
+
+<footer>
+  <div class="fb"><img src="dm-logo.svg" alt="Digital Movement"></div>
+  <b>Digital Movement · SEO Production System</b> · chain entry point <code>full_audit.py</code> · verdict by <code>gate_to_green.py</code> — GREEN only at 0 blockers.
+</footer>
+
+</div>
+<script>
+  const pb=document.getElementById('pb');
+  addEventListener('scroll',()=>{const h=document.documentElement;pb.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%'},{passive:true});
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.06});
+  document.querySelectorAll('section').forEach(s=>io.observe(s));
+  const gates=document.querySelectorAll('details.gate');
+  document.getElementById('expandAll').addEventListener('click',()=>gates.forEach(g=>g.open=true));
+  document.getElementById('collapseAll').addEventListener('click',()=>gates.forEach(g=>g.open=false));
+</script>
+</body>
+</html>
