@@ -4,12 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
-<title>SEO Page Quality Gates — Full Overview · Digital Movement</title>
+<title>SEO Production System — Quality Gates &amp; Implementation Process · Digital Movement</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<meta name="description" content="Every quality gate a page passes before, during and after production — with plain-language notes on why each matters, how it lifts Google rankings, and how an SEO specialist runs it with Claude.">
+<meta name="description" content="Digital Movement's SEO production system: the full quality-gate stack and the end-to-end implementation process, each step explained in plain language with how an SEO specialist runs it with Claude.">
 <style>
   :root{
-    /* Digital Movement brand */
     --ink:#1b1230; --ink2:#463a5e; --muted:#7a7090;
     --dm-purple:#321f4f;
     --amber:#ffb23d; --orange:#f05f22; --pink:#ec178d; --violet:#d332ff; --purple:#9a2fc6;
@@ -21,68 +20,104 @@
   }
   *{margin:0;padding:0;box-sizing:border-box}
   body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  code{font-family:var(--mono);font-size:.92em;background:#f2ecf8;padding:1px 5px;border-radius:5px;color:var(--purple)}
   .progress{position:fixed;top:0;left:0;height:3px;background:var(--grad);width:0%;z-index:99;transition:width .1s}
+
+  /* ---------- sticky top bar: brand + tabs + actions ---------- */
+  .topbar{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.93);backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid var(--line)}
+  .topbar-in{max-width:1060px;margin:0 auto;padding:9px 28px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .tb-logo{height:24px;width:auto;display:block}
+  .tabs{display:inline-flex;background:#f1ecf8;border-radius:99px;padding:4px;gap:4px}
+  .tabs button{font:inherit;font-size:13px;font-weight:700;border:none;background:transparent;color:var(--muted);padding:8px 16px;border-radius:99px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.15s;white-space:nowrap}
+  .tabs button:hover{color:var(--dm-purple)}
+  .tabs button.active{background:#fff;color:var(--dm-purple);box-shadow:0 2px 9px rgba(154,47,198,.18)}
+  .tabs .tnum{font-family:var(--mono);font-size:11px;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .tb-actions{margin-left:auto;display:flex;gap:8px}
+  .tb-actions button{font:inherit;font-size:12.5px;font-weight:650;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink2);padding:7px 13px;border-radius:99px;transition:.15s}
+  .tb-actions button:hover{border-color:var(--violet);color:var(--purple);box-shadow:0 3px 12px rgba(154,47,198,.12)}
+
+  /* ---------- panels ---------- */
+  .panel{display:none}
+  .panel.active{display:block;animation:fade .35s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
   .wrap{max-width:1060px;margin:0 auto;padding:0 28px 90px}
 
-  /* ---------- header ---------- */
-  header{padding:54px 0 34px;border-bottom:1px solid var(--line);margin-bottom:40px}
-  .brand{display:flex;align-items:center;gap:14px;margin-bottom:28px}
-  .brand img{height:30px;width:auto;display:block}
-  .brand .div{width:1px;height:24px;background:var(--line)}
-  .brand .tag{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-  h1{font-size:clamp(28px,4.6vw,46px);font-weight:800;letter-spacing:-.022em;line-height:1.1;color:var(--dm-purple)}
+  /* ---------- hero ---------- */
+  .hero{padding:42px 0 30px;border-bottom:1px solid var(--line);margin-bottom:30px}
+  .eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  h1{font-size:clamp(27px,4.4vw,44px);font-weight:800;letter-spacing:-.022em;line-height:1.1;color:var(--dm-purple)}
   h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-  .sub{margin-top:16px;font-size:16px;color:var(--ink2);max-width:660px}
-  .sub code{font-family:var(--mono);font-size:13px;background:#f2ecf8;padding:1px 6px;border-radius:5px;color:var(--purple)}
-  .forwho{margin-top:18px;font-size:14.5px;color:var(--muted);max-width:660px}
+  .sub{margin-top:15px;font-size:16px;color:var(--ink2);max-width:680px}
+  .forwho{margin-top:16px;font-size:14.5px;color:var(--muted);max-width:680px}
   .forwho b{color:var(--ink2)}
-  .law{margin-top:22px;display:inline-block;background:var(--dm-purple);color:#fff;border-radius:9px;padding:10px 18px;font-size:13.5px;font-weight:600}
+  .law{margin-top:20px;display:inline-block;background:var(--dm-purple);color:#fff;border-radius:9px;padding:10px 18px;font-size:13.5px;font-weight:600}
   .law b{color:var(--amber)}
-  .legend{margin-top:22px;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;font-size:12.5px;color:var(--muted)}
+  .legend{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;font-size:12.5px;color:var(--muted)}
   .legend span{display:inline-flex;align-items:center;gap:7px}
   .legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
-  .toolbar{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
-  .toolbar button{font:inherit;font-size:13px;font-weight:650;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink2);padding:8px 15px;border-radius:99px;transition:.15s}
-  .toolbar button:hover{border-color:var(--violet);color:var(--purple);box-shadow:0 3px 12px rgba(154,47,198,.10)}
 
-  /* ---------- sections ---------- */
-  section{margin-bottom:46px;opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
-  section.in{opacity:1;transform:none}
-  .stage{display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap}
-  .stage .n{font-family:var(--mono);font-size:11.5px;font-weight:700;color:#fff;background:var(--grad);border-radius:7px;padding:4px 11px;letter-spacing:.06em;white-space:nowrap}
-  h2{font-size:22px;font-weight:780;letter-spacing:-.01em;color:var(--dm-purple)}
-  .note{font-size:14px;color:var(--muted);margin:7px 0 18px}
-  h3{font-size:14px;font-weight:750;margin:30px 0 12px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  /* ---------- roles (tab 2) ---------- */
+  .roles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0 4px}
+  .role{border:1px solid var(--line);border-radius:12px;padding:13px 14px;background:#fff}
+  .role .ic{font-size:17px;margin-bottom:5px}
+  .role h4{font-size:13px;font-weight:750;color:var(--dm-purple)}
+  .role p{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.5}
+
+  /* ---------- collapsible stage / phase group ---------- */
+  .grp{border:1px solid var(--line);border-radius:14px;background:var(--card);margin-bottom:16px;overflow:hidden;box-shadow:0 1px 3px rgba(27,18,48,.05)}
+  .grp>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:13px;padding:16px 18px}
+  .grp>summary::-webkit-details-marker{display:none}
+  .grp>summary:hover{background:#faf6fe}
+  .grp .n{font-family:var(--mono);font-size:11.5px;font-weight:700;color:#fff;background:var(--grad);border-radius:7px;padding:4px 11px;letter-spacing:.05em;white-space:nowrap}
+  .grp h2{font-size:19px;font-weight:780;letter-spacing:-.01em;color:var(--dm-purple);flex:1;min-width:0}
+  .gchev{flex-shrink:0;width:20px;height:20px;color:var(--muted);transition:transform .25s ease}
+  .grp[open]>summary .gchev{transform:rotate(180deg);color:var(--purple)}
+  .grp-body{padding:0 16px 16px}
+  .grp-body .note{font-size:14px;color:var(--muted);margin:2px 4px 14px}
+  h3{font-size:13.5px;font-weight:750;margin:20px 4px 11px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
   h3 .htag{font-size:11px;font-weight:700;letter-spacing:.07em;border-radius:6px;padding:4px 10px}
   h3 .htag.c{background:#f1ecf8;color:var(--purple)}
   h3 .htag.k{background:#fdeaf4;color:var(--pink)}
   h3 .hmuted{font-weight:600;color:var(--muted)}
 
-  /* ---------- accordion gate ---------- */
-  .gate{border:1px solid var(--line);border-radius:12px;background:var(--card);margin-bottom:9px;overflow:hidden;box-shadow:0 1px 2px rgba(27,18,48,.04);transition:border-color .18s,box-shadow .18s}
+  /* ---------- accordion item (gate / stage / month) ---------- */
+  .gate{border:1px solid var(--line);border-radius:12px;background:#fff;margin-bottom:9px;overflow:hidden;box-shadow:0 1px 2px rgba(27,18,48,.04);transition:border-color .18s,box-shadow .18s}
   .gate[open]{border-color:var(--violet);box-shadow:0 8px 26px rgba(154,47,198,.11)}
-  summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:13px;padding:14px 16px}
-  summary::-webkit-details-marker{display:none}
-  summary:hover{background:#faf6fe}
+  summary{list-style:none}
+  .gate summary{cursor:pointer;display:flex;align-items:center;gap:13px;padding:13px 15px}
+  .gate summary::-webkit-details-marker{display:none}
+  .gate summary:hover{background:#faf6fe}
   .gid{font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;background:var(--purple);border-radius:6px;padding:3px 9px;flex-shrink:0;min-width:34px;text-align:center}
   .gid.r{background:var(--pink)}
   .gid.s{background:var(--dm-purple)}
-  .gname{flex:1;min-width:0;font-weight:700;color:var(--ink);font-size:15px}
-  .gstatus{flex-shrink:0}
+  .gid.pstage{background:var(--dm-purple)}
+  .gid.month{background:var(--grad)}
+  .gname{flex:1;min-width:0;font-weight:700;color:var(--ink);font-size:14.5px}
+  .gstatus{flex-shrink:0;display:flex;align-items:center;gap:6px}
   .pill{font-size:10.5px;font-weight:700;letter-spacing:.05em;border-radius:99px;padding:4px 11px;white-space:nowrap}
   .pill.block{background:#fdecec;color:var(--red)}
   .pill.drop{background:#fff4e2;color:var(--amber-ui)}
   .pill.ok{background:#e8f6ee;color:var(--green)}
   .pill.live{background:#eaf1fd;color:#2563eb}
   .chip{font-size:11.5px;font-weight:650;color:var(--ink2);background:#f3eefa;border:1px solid #ece2f6;border-radius:7px;padding:4px 10px;white-space:nowrap;font-family:var(--mono)}
+  .lvl{font-size:10px;font-weight:800;border-radius:6px;padding:3px 8px;letter-spacing:.02em;white-space:nowrap}
+  .lvl.full{background:#e8f6ee;color:#0f8a4e}
+  .lvl.part{background:#fff4e2;color:#c77700}
+  .lvl.assist{background:#f1ecf8;color:var(--purple)}
   .chev{flex-shrink:0;width:18px;height:18px;color:var(--muted);transition:transform .25s ease}
   .gate[open] .chev{transform:rotate(180deg);color:var(--purple)}
 
-  .gbody{padding:2px 16px 16px;display:grid;gap:10px}
+  .gbody{padding:2px 15px 15px;display:grid;gap:10px}
   .gwhat{font-size:14px;color:var(--ink2);background:#faf8fc;border:1px solid var(--line);border-radius:9px;padding:11px 13px}
   .gwhat b{color:var(--dm-purple)}
+  .who{display:flex;flex-wrap:wrap;gap:6px}
+  .rc{font-size:11px;font-weight:700;border-radius:6px;padding:3px 9px;white-space:nowrap}
+  .rc.ops{background:#eef4ff;color:#2d5fd0}
+  .rc.seo{background:#e9f7f0;color:#0f8a4e}
+  .rc.copy{background:#fdeef6;color:#bb1271}
+  .rc.dev{background:#f1ecf8;color:#7c3aed}
   .exp{border-left:3px solid;border-radius:0 9px 9px 0;padding:11px 14px}
-  .exp h4{font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;gap:7px}
+  .exp h4{font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .exp p{font-size:14px;color:var(--ink2);line-height:1.55}
   .exp.why{border-color:var(--orange);background:#fff6ee}
   .exp.why h4{color:#c4521a}
@@ -90,53 +125,66 @@
   .exp.rank h4{color:#bb1271}
   .exp.claude{border-color:var(--purple);background:#f7f0fc}
   .exp.claude h4{color:var(--purple)}
-  .exp.claude p b{color:var(--dm-purple)}
+  .tasklist{margin:2px 2px 2px 4px;padding-left:18px}
+  .tasklist li{font-size:13.5px;color:var(--ink2);margin-bottom:5px;line-height:1.5}
 
-  footer{border-top:1px solid var(--line);padding-top:24px;margin-top:10px;font-size:13px;color:var(--muted)}
+  footer{border-top:1px solid var(--line);padding-top:24px;margin-top:14px;font-size:13px;color:var(--muted)}
   footer .fb{display:flex;align-items:center;gap:12px;margin-bottom:12px}
   footer .fb img{height:22px}
   footer b{color:var(--ink2)}
-  footer code{font-family:var(--mono);font-size:12px;background:#f2ecf8;padding:1px 5px;border-radius:4px;color:var(--purple)}
 
   @media(max-width:640px){
-    .wrap{padding:0 15px 60px}
-    h3{font-size:13px}
-    summary{gap:10px;padding:13px 13px;flex-wrap:wrap}
-    .gname{font-size:14.5px;flex-basis:60%}
+    .topbar-in{padding:9px 14px;gap:9px}
+    .tabs{order:2;width:100%;justify-content:center}
+    .tabs button{flex:1;justify-content:center;padding:8px 10px}
+    .tb-actions{order:3;margin-left:0;width:100%}
+    .tb-actions button{flex:1}
+    .wrap{padding:0 14px 60px}
+    .grp h2{font-size:17px}
+    .gate summary{gap:10px;padding:12px 12px;flex-wrap:wrap}
+    .gname{font-size:14px;flex-basis:58%}
     .chev{margin-left:auto}
-    .gbody{padding:2px 13px 14px}
+    .roles{grid-template-columns:1fr 1fr}
   }
 </style>
 </head>
 <body>
 <div class="progress" id="pb"></div>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <img class="tb-logo" src="dm-logo.svg" alt="Digital Movement">
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" data-tab="gates"><span class="tnum">01</span> Quality Gates</button>
+      <button class="tab-btn" data-tab="process"><span class="tnum">02</span> Implementation Process</button>
+    </div>
+    <div class="tb-actions">
+      <button id="expandAll">Expand all</button>
+      <button id="collapseAll">Collapse all</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ TAB 1 — QUALITY GATES ============================ -->
+<div class="panel active" id="panel-gates">
 <div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">● Digital Movement · SEO Production System</div>
+    <h1>SEO Page Quality Gates<br><span class="g">— the full stack, explained</span></h1>
+    <p class="sub">Every gate a page passes before, during and after production. The per-page chain runs automatically in one go via <code>full_audit.py</code>; “done” is decided by <code>gate_to_green.py</code> — GREEN only at zero blockers.</p>
+    <p class="forwho">Each gate carries three plain-language notes: <b>why it matters</b>, <b>how it lifts your Google ranking</b>, and <b>how an SEO specialist implements it with Claude</b>.</p>
+    <div class="law">Governance: <b>gates &gt; prompts &gt; page-as-is</b> · nothing ships until every applicable gate is green</div>
+    <div class="legend">
+      <span><i style="background:var(--orange)"></i>Why it matters</span>
+      <span><i style="background:var(--pink)"></i>How it lifts ranking</span>
+      <span><i style="background:var(--purple)"></i>How to run it with Claude</span>
+    </div>
+  </div>
 
-<header>
-  <div class="brand">
-    <img src="dm-logo.svg" alt="Digital Movement">
-    <div class="div"></div>
-    <div class="tag">SEO Production System</div>
-  </div>
-  <h1>SEO Page Quality Gates<br><span class="g">— the full stack, explained</span></h1>
-  <p class="sub">Every gate a page passes before, during and after production. The per-page chain runs automatically in one go via <code>full_audit.py</code>; "done" is decided by <code>gate_to_green.py</code> — GREEN only at zero blockers.</p>
-  <p class="forwho">Built for in-house and partner SEO teams. Every gate carries three plain-language notes: <b>why it matters</b>, <b>how it lifts your Google ranking</b>, and <b>how an SEO specialist implements it with Claude</b>.</p>
-  <div class="law">Governance: <b>gates &gt; prompts &gt; page-as-is</b> · nothing ships until every applicable gate is green</div>
-  <div class="legend">
-    <span><i style="background:var(--orange)"></i>Why it matters</span>
-    <span><i style="background:var(--pink)"></i>How it lifts ranking</span>
-    <span><i style="background:var(--purple)"></i>How to run it with Claude</span>
-  </div>
-  <div class="toolbar">
-    <button id="expandAll">Expand all</button>
-    <button id="collapseAll">Collapse all</button>
-  </div>
-</header>
-
-<!-- ============ STAGE 0 ============ -->
-<section>
-  <div class="stage"><span class="n">STAGE 0</span><h2>Before any page exists — keyword scope</h2></div>
-  <p class="note">Bad keywords never become pages. These run on the keyword list, not on HTML.</p>
+<details class="grp reveal" open>
+  <summary class="grp-head"><span class="n">STAGE 0</span><h2>Before any page exists — keyword scope</h2><svg class="gchev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="grp-body">
+<p class="note">Bad keywords never become pages. These run on the keyword list, not on HTML.</p>
 
   <details class="gate">
     <summary><span class="gid s">G0·1</span><span class="gname">Keyword scope gate</span><span class="gstatus"><span class="pill drop">DROPPED</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
@@ -177,12 +225,13 @@
       <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> estimate monthly enquiry potential per keyword (volume × intent × win-likelihood), apply a per-cluster cap so one service doesn't eat the budget, and output a ranked build list with the rest held in reserve.</p></div>
     </div>
   </details>
-</section>
+  </div>
+</details>
 
-<!-- ============ STAGE 1 ============ -->
-<section>
-  <div class="stage"><span class="n">STAGE 1</span><h2>Per-page audit chain — runs automatically, in order</h2></div>
-  <p class="note">A page is never "done" after one gate — the whole chain runs in one command and reports a single consolidated verdict.</p>
+<details class="grp reveal" open>
+  <summary class="grp-head"><span class="n">STAGE 1</span><h2>Per-page audit chain — runs automatically, in order</h2><svg class="gchev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="grp-body">
+<p class="note">A page is never "done" after one gate — the whole chain runs in one command and reports a single consolidated verdict.</p>
 
   <details class="gate">
     <summary><span class="gid s">1</span><span class="gname">Benchmark gate</span><span class="gstatus"><span class="pill block">BLOCKER</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
@@ -305,13 +354,13 @@
       <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> take desktop and mobile screenshots, check the hero fits and stays on-topic with the H1, and list every visual issue to fix before sign-off.</p></div>
     </div>
   </details>
-</section>
+  </div>
+</details>
 
-<!-- ============ THE 36 CHECKS ============ -->
-<section>
-  <div class="stage"><span class="n">DETAIL</span><h2>The 36 checks inside the gate-runner</h2></div>
-
-  <h3><span class="htag c">COMPLIANCE · 20 CHECKS</span><span class="hmuted">keeps the page IN the index</span></h3>
+<details class="grp reveal" open>
+  <summary class="grp-head"><span class="n">DETAIL</span><h2>The 36 checks inside the gate-runner</h2><svg class="gchev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="grp-body">
+<h3><span class="htag c">COMPLIANCE · 20 CHECKS</span><span class="hmuted">keeps the page IN the index</span></h3>
 
   <details class="gate">
     <summary><span class="gid">A</span><span class="gname">Uniqueness vs hub + nearest sibling</span><span class="gstatus"><span class="chip">≥ 50% unique</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
@@ -638,12 +687,13 @@
       <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> verify the draft answers every recurring question from the research corpus before publishing.</p></div>
     </div>
   </details>
-</section>
+  </div>
+</details>
 
-<!-- ============ STAGE 2 ============ -->
-<section>
-  <div class="stage"><span class="n">STAGE 2</span><h2>Whole-set gates — before the sitemap ships</h2></div>
-  <p class="note">Per-page green is not enough; the set has to be healthy as a whole.</p>
+<details class="grp reveal" open>
+  <summary class="grp-head"><span class="n">STAGE 2</span><h2>Whole-set gates — before the sitemap ships</h2><svg class="gchev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="grp-body">
+<p class="note">Per-page green is not enough; the set has to be healthy as a whole.</p>
 
   <details class="gate">
     <summary><span class="gid s">W1</span><span class="gname">Index-readiness gate</span><span class="gstatus"><span class="chip">Score ≥ 50</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
@@ -684,12 +734,13 @@
       <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Have <b>Claude</b> check redirects, noindex tags and leftover CMS pages and list the fixes.</p></div>
     </div>
   </details>
-</section>
+  </div>
+</details>
 
-<!-- ============ STAGE 3 ============ -->
-<section>
-  <div class="stage"><span class="n">STAGE 3</span><h2>Live &amp; post-publish (Gate 4 of 4)</h2></div>
-  <p class="note">The work that turns indexed pages into ranked, enquiry-generating pages.</p>
+<details class="grp reveal" open>
+  <summary class="grp-head"><span class="n">STAGE 3</span><h2>Live &amp; post-publish (Gate 4 of 4)</h2><svg class="gchev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="grp-body">
+<p class="note">The work that turns indexed pages into ranked, enquiry-generating pages.</p>
 
   <details class="gate">
     <summary><span class="gid s">L1</span><span class="gname">seo-live-gate</span><span class="gstatus"><span class="pill live">LIVE</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
@@ -740,22 +791,454 @@
       <div class="exp claude"><h4>How a specialist implements it with Claude</h4><p>Ask <b>Claude</b> to audit NAP consistency across the site, GBP and citations, and fix every mismatch.</p></div>
     </div>
   </details>
-</section>
+  </div>
+</details>
 
-<footer>
-  <div class="fb"><img src="dm-logo.svg" alt="Digital Movement"></div>
-  <b>Digital Movement · SEO Production System</b> · chain entry point <code>full_audit.py</code> · verdict by <code>gate_to_green.py</code> — GREEN only at 0 blockers.
-</footer>
-
+  <footer>
+    <div class="fb"><img src="dm-logo.svg" alt="Digital Movement"></div>
+    <b>Digital Movement · SEO Production System</b> · chain entry point <code>full_audit.py</code> · verdict by <code>gate_to_green.py</code> — GREEN only at 0 blockers.
+  </footer>
 </div>
+</div>
+
+<!-- ====================== TAB 2 — IMPLEMENTATION PROCESS ====================== -->
+<div class="panel" id="panel-process">
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">● Digital Movement · SEO Production System</div>
+    <h1>The full SEO implementation process<br><span class="g">— first brief to live on Google</span></h1>
+    <p class="sub">Every stage from <b>strategy &amp; scoping</b> (which keywords deserve a page) through <b>page production</b> to pages <b>live, gated and indexed</b> on Google. The quality gates (Tab 01) are the ship-blockers inside this process.</p>
+    <p class="forwho">Each stage shows its <b>goal</b>, <b>who does it</b>, and <b>how an SEO specialist runs or automates it with Claude</b> — for in-house and partner teams. <span class="lvl full">⚡ Full auto</span> Claude does it end-to-end · <span class="lvl part">◐ Partial</span> Claude does most, a human approves · <span class="lvl assist">✎ Assist</span> Claude drafts, a human executes.</p>
+    <div class="roles">
+      <div class="role"><div class="ic">🧭</div><h4>Operations Manager</h4><p>Owns the project, gets the brief &amp; approvals, assigns tasks, checks quality.</p></div>
+      <div class="role"><div class="ic">🔍</div><h4>SEO Specialist</h4><p>Scope, keywords, SERP audit, gates, audits, indexing &amp; monthly upkeep.</p></div>
+      <div class="role"><div class="ic">✍️</div><h4>Copywriter</h4><p>Metadata, template copy, hub pillars, the modifier library, FAQs.</p></div>
+      <div class="role"><div class="ic">🛠️</div><h4>Web Developer</h4><p>Backups, plugins, dynamic text, page builds, schema, security.</p></div>
+    </div>
+  </div>
+
+<details class="grp reveal" open>
+  <summary class="grp-head"><span class="n">PHASE 0</span><h2>Strategy &amp; scoping — decide what deserves a page</h2><svg class="gchev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="grp-body"><p class="note">Phase Zero · strategy layer</p>
+<details class="gate">
+  <summary><span class="gid pstage">0.1</span><span class="gname">Kick-off: get the list of services from the client</span><span class="gstatus"><span class="lvl assist">✎ Assist</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Know exactly what the client sells, so you know what pages to build. Nothing begins until you have this list.</p>
+<div class="who"><span class="rc ops">🧭 Ops</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl assist">✎ Assist</span></h4><p>A <code>/seo-intake</code> skill: paste the client's message; Claude extracts the services, NAP and service area into <code>client-brief.json</code> and scaffolds the project folder.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">0.2</span><span class="gname">Lock the scope — what the client does (and doesn't) sell</span><span class="gstatus"><span class="lvl full">⚡ Full auto</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Turn the raw service list into a clear “we cover / we don't cover” map, so we never build a page for something the client doesn't sell.</p>
+<div class="who"><span class="rc seo">🔍 SEO</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl full">⚡ Full auto</span></h4><p>The <code>seo-client-setup</code> skill stores the scope taxonomy + deny-list as a project memory; every later keyword is auto-tested against it.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">0.3</span><span class="gname">Expand to every keyword candidate</span><span class="gstatus"><span class="lvl full">⚡ Full auto</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> List every possible page idea before filtering, so nothing is missed (services × locations × ≥3 wording variants each).</p>
+<div class="who"><span class="rc seo">🔍 SEO</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl full">⚡ Full auto</span></h4><p>The <code>seo-client-setup</code> candidate-expansion step crosses services × locations × variant templates into one list.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">0.4</span><span class="gname">Check the SERP — what Google actually shows (Google only)</span><span class="gstatus"><span class="lvl full">⚡ Full auto</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> For each candidate, read Google's top 10. If Google answers with Wikipedia, dictionaries, tools or news instead of businesses like the client, that keyword can't bring enquiries — flag it.</p>
+<div class="who"><span class="rc seo">🔍 SEO</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl full">⚡ Full auto</span></h4><p>The <code>seo-geo-standard-cycle</code> SERP-audit phase opens Semrush's SERP in the Chrome DevTools MCP, captures the top-10 + AI-Overview citations, and tags page types.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">0.5</span><span class="gname">Consultancy gate — keep only keywords real businesses rank for</span><span class="gstatus"><span class="lvl part">◐ Partial</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Keep only keywords where real businesses like the client own the top of Google — proof people are buying, not just reading (≥1 in top-3 OR ≥5 in top-10).</p>
+<div class="who"><span class="rc seo">🔍 SEO</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl part">◐ Partial</span></h4><p>The <code>seo-geo-standard-cycle</code> consultancy gate classifies each domain (deny-list first, Firecrawl the homepage for unknowns) and caches results 90 days.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">0.6</span><span class="gname">Rank by expected leads → the ~400-page build list</span><span class="gstatus"><span class="lvl full">⚡ Full auto</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Decide which keepers to build first by how many enquiries each could bring — EYS (volume × click-rate × intent × ease), with a per-cluster cap. Top ~400 build; rest go to reserve.</p>
+<div class="who"><span class="rc seo">🔍 SEO</span><span class="rc ops">🧭 Ops</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl full">⚡ Full auto</span></h4><p>The <code>master-page-list</code> template runs the EYS triage with per-cluster caps and emits the ranked build list + reserve pool as HTML/CSV.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">0.7</span><span class="gname">The exposure &amp; growth plan (client-facing)</span><span class="gstatus"><span class="lvl full">⚡ Full auto</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Show the client the whole opportunity — today's coverage vs the full services × areas footprint — and the phased plan to capture it.</p>
+<div class="who"><span class="rc seo">🔍 SEO</span><span class="rc ops">🧭 Ops</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl full">⚡ Full auto</span></h4><p><code>exposure_model.py</code> (in <code>seo-client-setup</code>) turns the services × locations matrix + current coverage into the branded Exposure &amp; Growth Plan.</p></div>
+  </div>
+</details>
+  </div>
+</details>
+
+<details class="grp reveal" open>
+  <summary class="grp-head"><span class="n">PHASE 1</span><h2>Prepare &amp; audit the current website</h2><svg class="gchev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="grp-body"><p class="note">Phase One</p>
+<details class="gate">
+  <summary><span class="gid pstage">02</span><span class="gname">Back up the whole website</span><span class="gstatus"><span class="lvl part">◐ Partial</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Make a safety copy (files AND database, stored off the server) so nothing is lost if a later change breaks the site. Never skip this.</p>
+<div class="who"><span class="rc dev">🛠️ Dev</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl part">◐ Partial</span></h4><p>A <code>/backup-site</code> skill runs a Bash backup (<code>wp db export</code> + <code>tar</code>); on Hostinger it triggers a VPS snapshot via the Hostinger MCP.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">03</span><span class="gname">Scan the site (crawl every page)</span><span class="gstatus"><span class="lvl full">⚡ Full auto</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Get a full list of every page + its current title and description, so you have a complete picture to work from.</p>
+<div class="who"><span class="rc seo">🔍 SEO</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl full">⚡ Full auto</span></h4><p>A <code>/crawl-site</code> skill: Firecrawl <code>map</code> lists every URL → Firecrawl/Chrome DevTools MCP reads each page's title, meta, H1, canonical &amp; status → Claude assembles the CSV. (Screaming Frog only as a fallback for huge sites.)</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">04</span><span class="gname">Capture the current tracking codes</span><span class="gstatus"><span class="lvl full">⚡ Full auto</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Know which tracking tools (Google Analytics, GTM, Ads, Pixel) are already on the site, so you don't break or duplicate them later.</p>
+<div class="who"><span class="rc seo">🔍 SEO</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl full">⚡ Full auto</span></h4><p>A <code>/detect-tags</code> skill opens the site in the Chrome DevTools MCP, reads the network requests, and flags GA / GTM / Ads / Meta Pixel into <code>tracking-codes.md</code>.</p></div>
+  </div>
+</details>
+  </div>
+</details>
+
+<details class="grp reveal" open>
+  <summary class="grp-head"><span class="n">PHASE 2</span><h2>Optimise the pages that already exist</h2><svg class="gchev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="grp-body"><p class="note">Phase Two</p>
+<details class="gate">
+  <summary><span class="gid pstage">05</span><span class="gname">Build the Master Worksheet (one sheet)</span><span class="gstatus"><span class="lvl full">⚡ Full auto</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> One spreadsheet that drives all optimisation work and acts as the master record for the project.</p>
+<div class="who"><span class="rc seo">🔍 SEO</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl full">⚡ Full auto</span></h4><p>A <code>/build-worksheet</code> skill merges the crawl into the A–H template and writes an import-ready <code>master-worksheet.csv</code>; pushes to Google Sheets via the Google Drive MCP.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">06</span><span class="gname">Find the keywords each page already ranks for</span><span class="gstatus"><span class="lvl full">⚡ Full auto</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Record what each page already ranks for, so you never accidentally remove a phrase that is already winning.</p>
+<div class="who"><span class="rc seo">🔍 SEO</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl full">⚡ Full auto</span></h4><p>A <code>/fill-existing-keywords</code> skill loops the URLs, calls the Semrush MCP Organic Research (Positions) per URL, and writes the top keywords into the sheet.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">07</span><span class="gname">Research new keywords</span><span class="gstatus"><span class="lvl full">⚡ Full auto</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Find the best new phrases each page could realistically rank for to send more traffic.</p>
+<div class="who"><span class="rc seo">🔍 SEO</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl full">⚡ Full auto</span></h4><p>A <code>/propose-keywords</code> skill seeds each service into the Semrush MCP Keyword Magic report, filters for low difficulty + decent volume, de-dupes, and fills the proposal columns.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">08</span><span class="gname">Check &amp; write the metadata → get approval</span><span class="gstatus"><span class="lvl part">◐ Partial</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Write a title + description per page that reads well, fits Google's space and carries the right keywords — then get it approved before it goes live.</p>
+<div class="who"><span class="rc copy">✍️ Copy</span><span class="rc seo">🔍 SEO</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl part">◐ Partial</span></h4><p>A <code>/write-metadata</code> skill drafts a title (50–60 chars) + description (150–160 chars) per row, auto-checks lengths, then stops for client / SEO-lead approval.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">09</span><span class="gname">Install the required site plugins</span><span class="gstatus"><span class="lvl part">◐ Partial</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Add the add-ons that make the site faster, safer to edit and easier to crawl (lazy-load, compression, change log, HTML sitemap, bulk noindex). On non-WordPress sites, achieve the same outcomes.</p>
+<div class="who"><span class="rc dev">🛠️ Dev</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl part">◐ Partial</span></h4><p>A <code>/install-plugins</code> skill runs <code>wp plugin install &lt;slugs&gt; --activate</code> over WP-CLI, or deploys via the Hostinger MCP. Needs site access.</p></div>
+  </div>
+</details>
+  </div>
+</details>
+
+<details class="grp reveal" open>
+  <summary class="grp-head"><span class="n">PHASE 3</span><h2>Mass-produce the location pages</h2><svg class="gchev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="grp-body"><p class="note">Phase Three</p>
+<details class="gate">
+  <summary><span class="gid pstage">10</span><span class="gname">Get the target locations from the client</span><span class="gstatus"><span class="lvl full">⚡ Full auto</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Get the exact list of areas the client wants to be found in. The location list always comes from the client.</p>
+<div class="who"><span class="rc ops">🧭 Ops</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl full">⚡ Full auto</span></h4><p>A <code>/build-location-matrix</code> skill crosses every main keyword with every location, pulls each combo's search volume from the Semrush MCP, and writes the ranked matrix.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">11</span><span class="gname">Set up Dynamic Text (write once, swap location)</span><span class="gstatus"><span class="lvl part">◐ Partial</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Write one page, then let the location swap itself automatically on every copy — this is what makes mass-production fast.</p>
+<div class="who"><span class="rc dev">🛠️ Dev</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl part">◐ Partial</span></h4><p>A <code>/setup-dynamic-text</code> skill outputs the exact <code>functions.php</code> snippet + an ACF field-group JSON; with WP-CLI it appends the code and imports the ACF group.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">12</span><span class="gname">Build ONE strong template page</span><span class="gstatus"><span class="lvl part">◐ Partial</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Create one excellent page (main keyword + location) you can then clone for every location.</p>
+<div class="who"><span class="rc copy">✍️ Copy</span><span class="rc dev">🛠️ Dev</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl part">◐ Partial</span></h4><p>A <code>/build-template-page</code> skill drafts the content into the layout. Static HTML: the DM <code>seo-page-gate-runner</code> template fills it. WordPress: push via the REST API.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">13</span><span class="gname">Add AI-friendly content elements + FAQs</span><span class="gstatus"><span class="lvl full">⚡ Full auto</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Make the page easy for people AND AI search engines to read, so it ranks better and can be quoted in Google's AI answers (aim 600+ words on content-rich pages).</p>
+<div class="who"><span class="rc copy">✍️ Copy</span><span class="rc dev">🛠️ Dev</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl full">⚡ Full auto</span></h4><p>A <code>/add-faq-block</code> skill mines People-Also-Ask, writes 40–50-word answers, and outputs the accordion HTML plus matching FAQPage JSON-LD in one pass.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">14</span><span class="gname">Duplicate the page for every location</span><span class="gstatus"><span class="lvl full">⚡ Full auto</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Turn the one template into many location pages, fast, without rewriting the content.</p>
+<div class="who"><span class="rc dev">🛠️ Dev</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl full">⚡ Full auto</span></h4><p>A <code>/generate-location-pages</code> skill reads the template + matrix, writes one page per location (swapping title / location / dynamic text), then runs a duplicate-content check.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">15</span><span class="gname">Topic mining for blog content (Reddit + PAA)</span><span class="gstatus"><span class="lvl full">⚡ Full auto</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Find blog and FAQ ideas based on real problems people actually have — not guesses.</p>
+<div class="who"><span class="rc seo">🔍 SEO</span><span class="rc copy">✍️ Copy</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl full">⚡ Full auto</span></h4><p>A <code>/mine-topics</code> skill runs Reddit search operators via WebSearch / Firecrawl, scrapes the busiest threads, pulls People-Also-Ask, and clusters repeated questions into a ranked list.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">16</span><span class="gname">Internal linking — kill every orphan page</span><span class="gstatus"><span class="lvl part">◐ Partial</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Make sure every page can be reached through links, so Google can find, crawl and value it. A page with no inbound links is an “orphan” and usually fails to rank.</p>
+<div class="who"><span class="rc seo">🔍 SEO</span><span class="rc dev">🛠️ Dev</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl part">◐ Partial</span></h4><p>The <code>seo-corpus-gate</code> skill builds the internal-link graph (from a Firecrawl crawl) and flags orphans by diffing it against the sitemap + GSC URL list; a <code>/fix-internal-links</code> step adds the missing links.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">17</span><span class="gname">Homepage &amp; local schema</span><span class="gstatus"><span class="lvl full">⚡ Full auto</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Give Google a clear, machine-readable summary of the business (name, location, contact) so it shows the company correctly in local results.</p>
+<div class="who"><span class="rc dev">🛠️ Dev</span><span class="rc seo">🔍 SEO</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl full">⚡ Full auto</span></h4><p>A <code>/generate-schema</code> skill reads <code>client-brief.json</code>, writes LocalBusiness / Organization JSON-LD with the required + recommended fields, and validates it.</p></div>
+  </div>
+</details>
+  </div>
+</details>
+
+<details class="grp reveal" open>
+  <summary class="grp-head"><span class="n">PHASE 4</span><h2>Production engine — build the 400-page system</h2><svg class="gchev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="grp-body"><p class="note">Phase Four · multi-hub build path</p>
+<details class="gate">
+  <summary><span class="gid pstage">4.0</span><span class="gname">The big idea — hub-and-spoke + reusable library</span><span class="gstatus"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Scale from one service to several clusters and ~400 high-intent pages without hand-writing every page. Author ~8 hubs + a library of ~50–74 grounded “modifier” blocks; automation composes ≥3 modifiers per page into 400 pages that are unique by construction (~200k words authored, not 600k).</p>
+<div class="who"><span class="rc ops">🧭 Ops</span><span class="rc seo">🔍 SEO</span><span class="rc copy">✍️ Copy</span><span class="rc dev">🛠️ Dev</span></div>
+
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">4.1</span><span class="gname">Multi-hub keyword research</span><span class="gstatus"><span class="lvl full">⚡ Full auto</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Build the hub-and-spoke keyword map across every cluster (head × cities × sectors × method × consultant-noun variants), then gate and rank it through Phase Zero before copy begins. Page counts add up to ~400.</p>
+<div class="who"><span class="rc seo">🔍 SEO</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl full">⚡ Full auto</span></h4><p><code>seo-client-setup</code> candidate-expansion + the Semrush MCP (Keyword Magic / Related / Questions per hub) → the <code>master-page-list</code> template emits the hub-and-spoke map.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">4.2</span><span class="gname">Page Guide + Sitemap (proposal tab 03)</span><span class="gstatus"><span class="lvl full">⚡ Full auto</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Turn the map into the two client-facing deliverables that must always agree: a row-per-page Page Guide and the architecture tree (Home → hubs → spokes). Hard rule: Page-Guide row count == Sitemap sub-page count.</p>
+<div class="who"><span class="rc seo">🔍 SEO</span><span class="rc ops">🧭 Ops</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl full">⚡ Full auto</span></h4><p>The <code>master-page-list</code> template is the single source of the 400; the <code>seo-project-plan</code> template renders tab 03 with the Page Guide + Sitemap and runs the row-count == sub-page-count sync check.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">4.3</span><span class="gname">C1 — research the substance</span><span class="gstatus"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Build a research corpus for each hub and key spoke (real Reddit threads + People-Also-Ask), so every page is based on real buyer language. One subagent per hub.</p>
+<div class="who"><span class="rc seo">🔍 SEO</span><span class="rc copy">✍️ Copy</span></div>
+<div class="exp claude"><h4>How a specialist runs it with Claude</h4><p><b>Run:</b> <code>research_corpus.py --topic "&lt;hub&gt;" --location "&lt;area&gt;" --out-dir ./research</code> · <b>Gate:</b> ≥3 real sources per corpus or it is re-pulled.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">4.4</span><span class="gname">C2 — write the hub pillar pages</span><span class="gstatus"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Create one flagship hub per cluster before spokes are composed: full page cycle (brief → draft → design 10/10 → visuals), grounded in the corpus, ≥1,500 words, original proof, hero + bottom contact forms.</p>
+<div class="who"><span class="rc copy">✍️ Copy</span></div>
+<div class="exp claude"><h4>How a specialist runs it with Claude</h4><p><b>Output:</b> ~8 gate-ready hub pages.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">4.5</span><span class="gname">C3 — build the modifier library</span><span class="gstatus"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Write the reusable blocks that make the 400 pages unique and grounded: ~50–74 geo / sector / method blocks, each ≥2,500 words and built from its research corpus.</p>
+<div class="who"><span class="rc copy">✍️ Copy</span></div>
+<div class="exp claude"><h4>How a specialist runs it with Claude</h4><p><b>Run:</b> <code>content_relevance_gate.py --pages ./blocks --research-dir ./research</code> per block · <b>Gate:</b> grounded (sources ≥3, terminology ≥70%, real-questions ≥60%) or rejected.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">4.6</span><span class="gname">C4 — prove uniqueness before mass build</span><span class="gstatus"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Prove the architecture can create unique pages BEFORE writing or rendering all 400: render 5–8 sample pages, check they are ≥50% unique from each other. If not, STOP and fix the templates/blocks first.</p>
+<div class="who"><span class="rc dev">🛠️ Dev</span><span class="rc seo">🔍 SEO</span></div>
+<div class="exp claude"><h4>How a specialist runs it with Claude</h4><p>This step is what prevents the 19%-unique page failure — never write the full 400 on a broken architecture.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">4.7</span><span class="gname">C5 — compose all 400 pages</span><span class="gstatus"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Use the templater to compose every page from the hub, modifier library and page list — ≥3 modifiers per page, plus FAQ, internal links, schema and the hero contact form.</p>
+<div class="who"><span class="rc dev">🛠️ Dev</span></div>
+<div class="exp claude"><h4>How a specialist runs it with Claude</h4><p><b>Run:</b> <code>templater.py --hub &lt;hub.html&gt; --library modifier-library.json --keywords page-list.json --out-root &lt;site&gt;</code></p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">4.8</span><span class="gname">C6 — gate-loop until green</span><span class="gstatus"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Keep fixing pages until the gate runner exits green and writes the sitemap: relevance gate → benchmark 100/100 → 32-check runner → corpus-gate. Fix only the offending blocks, re-run until exit 0.</p>
+<div class="who"><span class="rc seo">🔍 SEO</span><span class="rc copy">✍️ Copy</span></div>
+<div class="exp claude"><h4>How a specialist runs it with Claude</h4><p><b>Run:</b> <code>runner.py &lt;pages&gt; --hub &lt;hub&gt; --require-research</code> — writes the sitemap only on PASS. No page ships otherwise.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">4.9</span><span class="gname">Human checkpoints &amp; effort reality</span><span class="gstatus"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Keep the team clear on what's automated and where humans decide. The team makes only THREE calls: sign off the Page Guide, sign off the copy, and provide the go-live target/access. Everything else runs as automated, parallel Claude work. Honest: it is not instant, and getting indexed (Stage 20) is the real finish line.</p>
+<div class="who"><span class="rc ops">🧭 Ops</span></div>
+<div class="exp claude"><h4>How a specialist runs it with Claude</h4><p><b>Single instruction:</b> <i>“Run seo-client-setup on &lt;client&gt; end-to-end — size to 400, scope &amp; gate, research, build the hub library, template the 400, enforce the gates, fix until green, then stop for my go.”</i></p></div>
+  </div>
+</details>
+  </div>
+</details>
+
+<details class="grp reveal" open>
+  <summary class="grp-head"><span class="n">PHASE 5</span><h2>Launch on Google &amp; keep it healthy</h2><svg class="gchev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="grp-body"><p class="note">Phase Five</p>
+<details class="gate">
+  <summary><span class="gid pstage">18</span><span class="gname">Full on-page &amp; technical audit</span><span class="gstatus"><span class="lvl full">⚡ Full auto</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Fix everything that could block ranking or indexing before the site goes fully live (Core Web Vitals, duplicate/short titles, duplicate H1, missing canonicals, 4xx/5xx).</p>
+<div class="who"><span class="rc seo">🔍 SEO</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl full">⚡ Full auto</span></h4><p>A <code>/run-audit</code> skill: Chrome DevTools MCP <code>lighthouse_audit</code> for CWV + mobile, plus the Firecrawl crawl data for duplicates, missing canonicals and error codes.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">19</span><span class="gname">Analytics &amp; conversion tracking</span><span class="gstatus"><span class="lvl part">◐ Partial</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Measure visitors and — more importantly — count enquiries (calls, emails, form fills), so you can prove the SEO is working.</p>
+<div class="who"><span class="rc seo">🔍 SEO</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl part">◐ Partial</span></h4><p>Claude generates an importable GTM container (tags + triggers for click-to-call, email, form submit), then uses the Chrome DevTools MCP to confirm each tag actually fires.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">20</span><span class="gname">Submit to Google &amp; get indexed ★ finish line</span><span class="gstatus"><span class="lvl part">◐ Partial</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Tell Google about every page and confirm it is actually in the index. A page is only truly “done” once it is indexed — this is the end-to-end finish line.</p>
+<div class="who"><span class="rc seo">🔍 SEO</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl part">◐ Partial</span></h4><p>The <code>seo-indexation-rescue</code> skill pulls each URL's status from the GSC URL Inspection API and re-requests indexing for not-indexed pages; a Bash step pings IndexNow + submits the sitemap.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">21</span><span class="gname">Security &amp; GEO blocking</span><span class="gstatus"><span class="lvl part">◐ Partial</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Cut spam and bot traffic from countries the client doesn't serve, and protect the site — cleaner traffic means cleaner analytics, fewer fake form fills and better security.</p>
+<div class="who"><span class="rc dev">🛠️ Dev</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl part">◐ Partial</span></h4><p>A <code>/setup-cloudflare</code> skill calls the Cloudflare API (Bash <code>curl</code>) to create the WAF country-block rule, and uses the Hostinger MCP to switch nameservers.</p></div>
+  </div>
+</details>
+<details class="gate">
+  <summary><span class="gid pstage">22</span><span class="gname">Ongoing monthly upkeep (the 12-month plan)</span><span class="gstatus"><span class="lvl full">⚡ Full auto</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody">
+<p class="gwhat"><b>Goal &middot;</b> Keep the site healthy, indexed and improving every month after launch. SEO is ongoing, not one-and-done — see the 12-month plan below.</p>
+<div class="who"><span class="rc seo">🔍 SEO</span><span class="rc ops">🧭 Ops</span></div>
+<div class="exp claude"><h4>How a specialist automates it with Claude <span class="lvl full">⚡ Full auto</span></h4><p>Use Claude Code scheduled agents (<code>/schedule</code>): a monthly routine auto-runs that month's task list — crawl, pull ranks from Semrush, check GSC indexing, generate the client report — and notifies you.</p></div>
+  </div>
+</details>
+  </div>
+</details>
+
+<details class="grp reveal" open>
+  <summary class="grp-head"><span class="n">UPKEEP</span><h2>The 12-month upkeep plan</h2><svg class="gchev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="grp-body"><p class="note">After launch the SEO specialist works one of these task lists each month to keep the site healthy, indexed and climbing.</p>
+<details class="gate">
+  <summary><span class="gid month">M1</span><span class="gname">Month 1</span><span class="gstatus"><span class="chip">10 tasks</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody"><ul class="tasklist"><li>Re-submitted XML sitemap in Search Console</li><li>Ran Screaming Frog site-wide crawl and patched broken links</li><li>Updated monthly keyword tracking + ranking benchmarks in AWR</li><li>Checked for new manual actions / security flags in GSC</li><li>Resolved redirect loops found in the crawl</li><li>Verified robots.txt isn't blocking priority service pages</li><li>Checked mobile layout spacing on the homepage</li><li>Monitored GSC for sudden drops in organic impressions</li><li>Audited footer links for consistency across sub-pages</li><li>Established baseline indexing-health monitors in Search Console</li></ul></div>
+</details>
+<details class="gate">
+  <summary><span class="gid month">M2</span><span class="gname">Month 2</span><span class="gstatus"><span class="chip">10 tasks</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody"><ul class="tasklist"><li>GA4 traffic/audience audit to decide if traffic security rules are needed</li><li>Analysed traffic logs for bot-driven spikes</li><li>Verified all GTM conversion tags fire for lead forms</li><li>Monitored GSC "crawled/discovered but not indexed" report</li><li>Verified internal-traffic filter still blocks office IPs</li><li>Audited GA4 data streams + attribution settings</li><li>Audited internal search queries for missing service keywords</li><li>Verified GTM triggers fire for all localised contact-form variants</li><li>Cross-referenced form hits with actual inbox data</li><li>Adjusted GA4 data-retention settings for long-term reporting</li></ul></div>
+</details>
+<details class="gate">
+  <summary><span class="gid month">M3</span><span class="gname">Month 3</span><span class="gstatus"><span class="chip">10 tasks</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody"><ul class="tasklist"><li>Optimised heavy homepage assets to improve load speed</li><li>Verified rich snippets still display in results</li><li>Configured lazy loading for below-the-fold images</li><li>Checked for "mixed content" security warnings</li><li>Audited H1/H2 tags on service pages for relevance</li><li>Audited backlink profile in Semrush + prepared a disavow file</li><li>Conducted UI/UX check across mobile browsers</li><li>Updated alt-text on recent project images + blog posts</li><li>Checked Core Web Vitals for new mobile issues</li><li>Verified SSL certificate status + auto-renewal</li></ul></div>
+</details>
+<details class="gate">
+  <summary><span class="gid month">M4</span><span class="gname">Month 4</span><span class="gstatus"><span class="chip">10 tasks</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody"><ul class="tasklist"><li>Optimised browser cache-control for static assets</li><li>Integrated uptime monitoring with downtime alerts</li><li>Checked for keyword cannibalisation on main ranking pages</li><li>Audited About + Contact pages for NAP consistency</li><li>Cross-referenced HTML user sitemap against the XML sitemap</li><li>Refined internal linking in sidebar + footer</li><li>Scanned for new "soft 404" errors in Search Console</li><li>Updated copyright year + legal links in footer</li><li>Reviewed GSC "Discover" report for traffic spikes</li><li>Verified the favicon shows correctly in Google mobile results</li></ul></div>
+</details>
+<details class="gate">
+  <summary><span class="gid month">M5</span><span class="gname">Month 5</span><span class="gstatus"><span class="chip">10 tasks</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody"><ul class="tasklist"><li>Validated structured data for rich-snippet eligibility</li><li>Verified GTM data-layer variables for accurate lead source</li><li>Audited the site's "Page Experience" score in GSC</li><li>Enabled server-level caching + cleared redundant CSS</li><li>Tested "Click to Call" buttons on mobile</li><li>Scanned for hidden text / ghost elements in the code</li><li>Checked indexing status for "crawled but not indexed" pages</li><li>Audited firewall logs + blocked suspicious IP ranges</li><li>Monitored "Images" tab in Search Console for gains</li><li>Verified the enquiry "Success Page" tracks accurately in GA4</li></ul></div>
+</details>
+<details class="gate">
+  <summary><span class="gid month">M6</span><span class="gname">Month 6</span><span class="gstatus"><span class="chip">10 tasks</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody"><ul class="tasklist"><li>Re-submitted updated sitemap to reflect site changes</li><li>Finalised cleanup of "Unassigned" traffic sources in GA4</li><li>Manual walk-through of the conversion funnel for friction</li><li>Checked for duplicate content with Screaming Frog</li><li>Verified lead-source attribution for all contact forms</li><li>Verified no accidental "nofollow" tags on key pages</li><li>Scanned for outdated plugin / script alerts</li><li>Validated GA4 event-parameter mapping for conversions</li><li>Checked GSC indexing reports for non-indexed priority URLs</li><li>Reviewed top page titles for truncation in mobile SERPs</li></ul></div>
+</details>
+<details class="gate">
+  <summary><span class="gid month">M7</span><span class="gname">Month 7</span><span class="gstatus"><span class="chip">10 tasks</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody"><ul class="tasklist"><li>Audited internal-link anchor text for keyword variety</li><li>Cleaned up redundant / outdated tags in GTM</li><li>Checked for broken outbound links to external sites</li><li>Monitored for new "soft 404" errors in GSC</li><li>Reviewed page-level engagement time for service pages in GA4</li><li>Verified image alt-text is descriptive and active</li><li>Scanned for hidden CSS/JS blocking indexation</li><li>Benchmarked domain authority vs local rivals in Semrush</li><li>Verified the XML sitemap is excluded from being indexed itself</li><li>Checked for orphan pages with a Screaming Frog crawl</li></ul></div>
+</details>
+<details class="gate">
+  <summary><span class="gid month">M8</span><span class="gname">Month 8</span><span class="gstatus"><span class="chip">10 tasks</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody"><ul class="tasklist"><li>Technical check on FAQ / Review schema markup</li><li>Tested layout so important pages aren't buried too deep</li><li>Checked for unintended "noindex" tags in the source</li><li>Verified canonical tags point to the correct URLs</li><li>Reviewed server uptime logs for 99.9% availability</li><li>Tested navigation across tablet + mobile devices</li><li>Reviewed GSC "Pages" report for crawl-budget waste</li><li>Checked for mixed-content warnings after updates</li><li>Verified SSL chain integrity + forced HTTPS redirection</li><li>Audited the internal search function for relevant results</li></ul></div>
+</details>
+<details class="gate">
+  <summary><span class="gid month">M9</span><span class="gname">Month 9</span><span class="gstatus"><span class="chip">10 tasks</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody"><ul class="tasklist"><li>Ran Wordfence malware scans + resolved threats</li><li>Verified lead-form "Thank You" pages are noindexed</li><li>Checked the 404 page has helpful navigation links</li><li>Monitored for sudden Googlebot crawl-rate increases</li><li>Reviewed mobile "Page Experience" signals in GSC</li><li>Verified GTM events capture correct lead-source data</li><li>Audited font loading to prevent layout shifts</li><li>Checked for thin-content pages to merge or expand</li><li>Scanned for expired/invalid tracking scripts in the header</li><li>Verified the About page matches current brand info</li></ul></div>
+</details>
+<details class="gate">
+  <summary><span class="gid month">M10</span><span class="gname">Month 10</span><span class="gstatus"><span class="chip">10 tasks</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody"><ul class="tasklist"><li>Audited GTM audience triggers for specific user actions</li><li>Checked for crawl errors on CSS/JS files</li><li>Verified SSL is valid across all subdomains</li><li>Scanned for "noarchive"/"nosnippet" tags</li><li>Monitored GSC for new "Merchant Listings" errors</li><li>Reviewed homepage-to-sub-page internal linking</li><li>Checked for broken links in the navigation menu</li><li>Verified favicon appears in all major browsers</li><li>Audited robots.txt for outdated disallow rules</li><li>Optimised cache-control headers for JS/CSS/fonts</li></ul></div>
+</details>
+<details class="gate">
+  <summary><span class="gid month">M11</span><span class="gname">Month 11</span><span class="gstatus"><span class="chip">10 tasks</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody"><ul class="tasklist"><li>Validated site-wide Open Graph tags for social sharing</li><li>Checked for new "crawl anomalies" in GSC</li><li>Verified all contact-form fields are mapped for tracking</li><li>Scanned for duplicate H1 tags across service pages</li><li>Monitored Semrush for new high-authority backlinks</li><li>Reviewed performance on low-bandwidth connections</li><li>Checked for redirect chains slowing the user journey</li><li>Audited footer for consistent branding + links</li><li>Verified the sitemap is listed in robots.txt</li><li>Checked for unintended "sponsored"/"ugc" link attributes</li></ul></div>
+</details>
+<details class="gate">
+  <summary><span class="gid month">M12</span><span class="gname">Month 12</span><span class="gstatus"><span class="chip">10 tasks</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="gbody"><ul class="tasklist"><li>Annual technical health check with Screaming Frog</li><li>Re-submitted the XML sitemap for a fresh index</li><li>Finalised cleanup of tracking/analytics errors in GA4</li><li>Manual audit of the end-to-end conversion path</li><li>Checked for new security issues in GSC</li><li>Verified metadata is consistent across all service areas</li><li>Scanned for outdated content to refresh or remove</li><li>Audited mobile-friendliness + accessibility</li><li>Verified all GTM tags fire on the correct triggers</li><li>Re-confirmed technical readiness for the next yearly cycle</li></ul></div>
+</details>
+  </div>
+</details>
+
+  <footer>
+    <div class="fb"><img src="dm-logo.svg" alt="Digital Movement"></div>
+    <b>Digital Movement · SEO Production System</b> · end-to-end process from the SEO Page Production Operations Playbook. The finish line is <b>indexed on Google</b> (Stage 20); SEO then continues monthly.
+  </footer>
+</div>
+</div>
+
 <script>
   const pb=document.getElementById('pb');
   addEventListener('scroll',()=>{const h=document.documentElement;pb.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%'},{passive:true});
-  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.06});
-  document.querySelectorAll('section').forEach(s=>io.observe(s));
-  const gates=document.querySelectorAll('details.gate');
-  document.getElementById('expandAll').addEventListener('click',()=>gates.forEach(g=>g.open=true));
-  document.getElementById('collapseAll').addEventListener('click',()=>gates.forEach(g=>g.open=false));
+
+  /* tab switching */
+  const tabs=document.querySelectorAll('.tab-btn');
+  const panels={gates:document.getElementById('panel-gates'),process:document.getElementById('panel-process')};
+  tabs.forEach(b=>b.addEventListener('click',()=>{
+    tabs.forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    Object.values(panels).forEach(p=>p.classList.remove('active'));
+    panels[b.dataset.tab].classList.add('active');
+    window.scrollTo({top:0,behavior:'instant'});
+  }));
+
+  /* expand / collapse all — acts on the active panel only */
+  function activePanel(){return document.querySelector('.panel.active');}
+  document.getElementById('expandAll').addEventListener('click',()=>
+    activePanel().querySelectorAll('details').forEach(d=>d.open=true));
+  document.getElementById('collapseAll').addEventListener('click',()=>
+    activePanel().querySelectorAll('details').forEach(d=>d.open=false));
 </script>
 </body>
 </html>
